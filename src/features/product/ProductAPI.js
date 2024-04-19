@@ -23,15 +23,18 @@ export function fetchAllProductsByFilters(filter, sort, pagination) {
     if(categoryValues.length){
       const lastCategoryValue = categoryValues[categoryValues.length - 1];
       queryString += `${key}=${lastCategoryValue}&`
+      console.log(queryString);
     }
   }
 
   for(let key in sort){
     queryString += `${key}=${sort[key]}&` 
+    // console.log(queryString);
   }
 
   for(let key in pagination){
     queryString += `${key}=${pagination[key]}&` 
+    console.log(queryString);
   }
 
   return new Promise(async (resolve) =>
@@ -39,10 +42,10 @@ export function fetchAllProductsByFilters(filter, sort, pagination) {
       const response = await fetch("http://localhost:8080/products?"+queryString);
       const products = await response.json();
       
-    //  console.log(products);
-    //  console.log(products.data);
+      console.log(products);
+      console.log(products.length);
     //  console.log(products.items);
-      resolve({data : {products : products.data, totalItems : products.items }});
+      resolve({data : {products : products, totalItems : products.length }});
     }
   );
 }

@@ -414,7 +414,7 @@ function ProductGrid({ products, status }) {
     <div>
       {/* This is our product list... */}
       <div className="bg-white">
-        <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
+        {products ? <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
           {products.length > 0 ? (
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             {status === 'loading' ? <RotatingLines
@@ -489,7 +489,7 @@ function ProductGrid({ products, status }) {
           ) : (
             <h3>Products are loading</h3>
           )}
-        </div>
+        </div> : null}
       </div>
     </div>
   );
