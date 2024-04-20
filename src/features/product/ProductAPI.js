@@ -41,11 +41,11 @@ export function fetchAllProductsByFilters(filter, sort, pagination) {
     {
       const response = await fetch("http://localhost:8080/products?"+queryString);
       const products = await response.json();
-      
+      const totalItems = response.headers.get('X-Total-Count');
       console.log(products);
-      console.log(products.length);
+      console.log(totalItems);
     //  console.log(products.items);
-      resolve({data : {products : products, totalItems : products.length }});
+      resolve({data : {products : products, totalItems : totalItems }});
     }
   );
 }

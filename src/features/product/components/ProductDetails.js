@@ -47,20 +47,25 @@ export default function ProductDetails() {
   const dispatch = useDispatch();
   const params = useParams();
   const alert = useAlert();
+    
+    if(items){
+     console.log(items);
+    }
 
   const handleCart = (e) => {
     e.preventDefault();
-    if (items.findIndex((item) => item.productId === product.id) < 0) {
-      const newItem = {
-        ...product,
-        productId: product.id,
-        quantity: 1,
-        user: user.id,
-      };
-      delete newItem["id"];
-      dispatch(addTocartAsync(newItem));
-      // TODO : it will be based on server response of backend
-      alert.show("item added successfully...");
+    if(items && product){
+      if (items.findIndex((item) => item.product.id === product.id) < 0) {
+        const newItem = {
+          product : product.id,
+          quantity: 1,
+          user: user.id,
+        };
+        
+        dispatch(addTocartAsync(newItem));
+        // TODO : it will be based on server response of backend
+        alert.show("item added successfully...");
+    }
     } else {
       alert.error("item already added..");
     }
