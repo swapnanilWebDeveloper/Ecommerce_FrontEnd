@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Modal from "../../common/Modal";
+import { useAlert } from "react-alert";
 
 function ProductForm() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function ProductForm() {
   const categories = useSelector(selectCategories);
   const selectedProduct = useSelector(selectProductById);
   const [openModal, setOpenModal] = useState(null);
+  const alert = useAlert();
 
   const {
     register,
@@ -87,9 +89,11 @@ function ProductForm() {
           if (params.id) {
             product.id = params.id;
             dispatch(updateProductAsync(product));
+            alert.success("Product updated successfully..")
             reset();
           } else {
             dispatch(createProductAsync(product));
+            alert.success("Product created successfully..")
             reset();
           }
         })}

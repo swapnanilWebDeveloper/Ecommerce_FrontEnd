@@ -1,15 +1,5 @@
 
-export function fetchAllProducts() {
-  return new Promise(async (resolve) =>
-    {
-      const response = await fetch("http://localhost:8080/products");
-      const data = await response.json();
-      resolve({data});
-    }
-  );
-}
-
-export function fetchAllProductsByFilters(filter, sort, pagination) {
+export function fetchAllProductsByFilters(filter, sort, pagination, admin) {
   // filter = {"category" :["smartphones"]}
   // sort = {_sort : "price"}
   // pagination = {_page : 4 , _per_page : 15} // _page=4&_per_page=15
@@ -37,9 +27,13 @@ export function fetchAllProductsByFilters(filter, sort, pagination) {
     console.log(queryString);
   }
 
+  if(admin){
+    queryString += `admin=true`
+  }
+
   return new Promise(async (resolve) =>
     {
-      const response = await fetch("http://localhost:8080/products?"+queryString);
+      const response = await fetch("http://localhost:8080/products?" + queryString);
       const products = await response.json();
       const totalItems = response.headers.get('X-Total-Count');
       console.log(products);

@@ -18,19 +18,11 @@ const initialState = {
   selectedProduct: null,
 };
 
-export const fetchAllProductsAsync = createAsyncThunk(
-  "product/fetchAllProducts",
-  async () => {
-    const response = await fetchAllProducts();
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
-  }
-);
 
 export const fetchAllProductsByFiltersAsync = createAsyncThunk(
   "product/fetchAllProductsByFilters",
-  async ({ filter, sort, pagination }) => {
-    const response = await fetchAllProductsByFilters(filter, sort, pagination);
+  async ({ filter, sort, pagination, admin}) => {
+    const response = await fetchAllProductsByFilters(filter, sort, pagination, admin);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -89,13 +81,6 @@ export const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllProductsAsync.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchAllProductsAsync.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.products = action.payload.data;
-      })
       .addCase(fetchAllProductsByFiltersAsync.pending, (state) => {
         state.status = "loading";
       })

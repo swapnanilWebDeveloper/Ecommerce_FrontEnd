@@ -1,7 +1,6 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  fetchAllProductsAsync,
   fetchAllProductsByFiltersAsync,
   fetchBrandsAsync,
   fetchCategoriesAsync,
@@ -95,7 +94,7 @@ export default function AdminProductList() {
 
   useEffect(() => {
     const pagination = { _page: page, _per_page: ITEMS_PER_PAGE };
-    dispatch(fetchAllProductsByFiltersAsync({ filter, sort, pagination }));
+    dispatch(fetchAllProductsByFiltersAsync({ filter, sort, pagination, admin : true }));
   }, [dispatch, filter, sort, page]);
 
   useEffect(() => {
@@ -546,6 +545,9 @@ function ProductGrid({ products }) {
                       {product.deleted && <div>
                          <p className="text-sm text-red-500">product deleted</p>
                       </div> }
+                      {product.stock === 0 ? (<div>
+                        <p className="text-sm text-red-500">product out of Stock</p>
+                     </div>) : null }
                     </div>
                   </Link>
                   <div>

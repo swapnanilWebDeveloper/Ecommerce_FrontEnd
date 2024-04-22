@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ITEMS_PER_PAGE } from "../../../app/constants";
+import { ITEMS_PER_PAGE, discountedPrice } from "../../../app/constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllOrdersAsync,
@@ -20,6 +20,9 @@ function AdminOrders() {
   const totalOrders = useSelector(selectTotalOrders);
   const [editableOrderId, setEditableOrderId] = useState(-1);
 
+  if(orders){
+    console.log(orders);
+  }
   const handleEdit = (order) => {
     setEditableOrderId(order.id);
   };
@@ -75,13 +78,13 @@ function AdminOrders() {
                   <p
                     onClick={(e) =>
                       handleSort({
-                        sort: "id",
+                        sort: "_id",
                       })
                     }
                     className="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                   >
                     Order ID / Order No.
-                    {sort._sort === '-id' ? (<ArrowUpIcon className="ml-2 w-6 h-6 text-green-700"></ArrowUpIcon>) 
+                    {sort._sort === '-_id' ? (<ArrowUpIcon className="ml-2 w-6 h-6 text-green-700"></ArrowUpIcon>) 
                       : (<ArrowDownIcon className="ml-2 w-6 h-6 text-red-700"></ArrowDownIcon>)}
                   </p>
                 </th>
@@ -137,8 +140,8 @@ function AdminOrders() {
                     {order.items.map((item, index) => (
                       <div className="flex items-center gap-6 my-8">
                         <img
-                          src={item.thumbnail}
-                          alt={item.title}
+                          src={item.product.thumbnail}
+                          alt={item.product.title}
                           className="inline-block relative object-cover object-center w-9 h-9 rounded-md mt-3 mx-2"
                         />
                         <div className="flex flex-col gap-y-3">
@@ -146,16 +149,16 @@ function AdminOrders() {
                             Product number : {index + 1}
                           </p>
                           <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">
-                            Title : {item.title}
+                            Title : {item.product.title}
                           </p>
                           <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">
-                            Category : {item.category}
+                            Category : {item.product.category}
                           </p>
                           <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">
-                            Brand : {item.brand}
+                            Brand : {item.product.brand}
                           </p>
                           <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">
-                            price : ${item.price}
+                            price : ${discountedPrice(item.product)}
                           </p>
                           <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">
                             quantity : {item.quantity}

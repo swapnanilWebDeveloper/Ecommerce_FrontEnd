@@ -37,6 +37,7 @@ export function fetchAllOrders(sort , pagination) {
 
   for(let key in sort){
     queryString += `${key}=${sort[key]}&` 
+    console.log(queryString);
   }
   
   for(let key in pagination){
@@ -48,7 +49,8 @@ export function fetchAllOrders(sort , pagination) {
       const response = await fetch("http://localhost:8080/orders?"+queryString);
       const orders = await response.json();
     
-     // console.log(typeof(orders.items));
-      resolve({data : {orders : orders.data, totalOrders : +orders.items }});
+     // console.log(orders);
+      const totalOrder = orders.length;
+      resolve({data : {orders : orders, totalOrders : totalOrder }});
     });
 }

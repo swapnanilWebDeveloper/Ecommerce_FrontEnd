@@ -2,7 +2,6 @@ import React, { useState, Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   SelectProductListStatus,
-  fetchAllProductsAsync,
   fetchAllProductsByFiltersAsync,
   fetchBrandsAsync,
   fetchCategoriesAsync,
